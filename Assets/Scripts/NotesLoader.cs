@@ -6,21 +6,16 @@ using TMPro;
 
 public class NotesLoader : MonoBehaviour
 {
-    // Образец
     public GameObject note_prefab;
 
-    // CSV-файл
     public TextAsset csv_file;
 
-    // Поля заметки
     private string input_note_name;
     private string input_note_text;
     private string input_note_image_url;
 
-    // Изображение
     public Texture2D note_image_file;
 
-    // Визуализация загрузки
     private float load_counter;
     private float len;
     public TMP_Text loading_bar_text;
@@ -41,7 +36,7 @@ public class NotesLoader : MonoBehaviour
 
             for (int i = 1; i < records.Length; i++)
             {
-                string[] fields = records[i].Split(',');
+                string[] fields = records[i].Split('\t');
 
                 input_note_name = fields[0];
                 input_note_text = fields[1];

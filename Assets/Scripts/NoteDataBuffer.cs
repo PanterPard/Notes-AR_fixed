@@ -1,20 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class NoteDataBuffer : MonoBehaviour
 {
-    // Поля вывода
-    public Text output_note_name;
-    public Text output_note_text;
+    public TMP_InputField output_note_name;
+    public TMP_InputField output_note_text;
 
-    // Данные
     public string note_name;
     public string note_text;
 
-    // Триггер
     public bool trigger = false;
 
     private void FixedUpdate()
@@ -23,8 +17,7 @@ public class NoteDataBuffer : MonoBehaviour
         {
             output_note_name.text = note_name;
             output_note_text.text = note_text;
-
-            Destroy(this.GetComponent<NoteDataBuffer>());
+            trigger = false;
         }
     }
 }

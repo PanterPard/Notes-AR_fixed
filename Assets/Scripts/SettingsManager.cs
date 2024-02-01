@@ -13,7 +13,7 @@ public class SettingsManager : MonoBehaviour
     public void Awake()
     {
         string[] records = csv_file.text.Split('\n');
-        string[] fields = records[1].Split(',');
+        string[] fields = records[1].Split('\t');
         {
             input_browser.text = fields[0];
         }
@@ -22,6 +22,9 @@ public class SettingsManager : MonoBehaviour
     public void WriteSettingsData()
     {
         File.WriteAllText(getPath() + "/Data/UserSettings.csv", "browser" + '\n' + input_browser.text);
+        #if UNITY_EDITOR
+        UnityEditor.AssetDatabase.Refresh();
+        #endif
     }
 
     private static string getPath()
