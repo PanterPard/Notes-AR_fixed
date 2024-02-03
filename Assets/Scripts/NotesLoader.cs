@@ -9,7 +9,10 @@ public class NotesLoader : MonoBehaviour
     public GameObject note_prefab;
 
     public TextAsset csv_file;
+    private char r = 'â†’';
+    private char f = 'â†”';
 
+    private string input_note_index;
     private string input_note_name;
     private string input_note_text;
     private string input_note_image_url;
@@ -28,7 +31,7 @@ public class NotesLoader : MonoBehaviour
 
     IEnumerator ReadData()
     {
-        string[] records = csv_file.text.Split('\n');
+        string[] records = csv_file.text.Split(r);
 
         if (records.Length != 1)
         {
@@ -36,11 +39,12 @@ public class NotesLoader : MonoBehaviour
 
             for (int i = 1; i < records.Length; i++)
             {
-                string[] fields = records[i].Split('\t');
+                string[] fields = records[i].Split(f);
 
-                input_note_name = fields[0];
-                input_note_text = fields[1];
-                input_note_image_url = fields[2];
+                input_note_index = fields[0];
+                input_note_name = fields[1];
+                input_note_text = fields[2];
+                input_note_image_url = fields[3];
 
                 yield return StartCoroutine(RetrieveTextureFromWeb());
             }
@@ -88,12 +92,13 @@ public class NotesLoader : MonoBehaviour
         Instantiate(note_prefab, note.transform);
 
         note.GetComponentInChildren<NoteDataBuffer>().trigger = true;
+        note.GetComponentInChildren<NoteDataBuffer>().note_index = input_note_index;
         note.GetComponentInChildren<NoteDataBuffer>().note_name = input_note_name;
         note.GetComponentInChildren<NoteDataBuffer>().note_text = input_note_text;
 
         load_counter += 1;
 
-        loading_bar_text.text = "Çàãðóçêà... (" + load_counter + "/" + len + ")";
+        loading_bar_text.text = "Ð—Ð°Ð³Ñ€ÑƒÐ·ÐºÐ°... (" + load_counter + "/" + len + ")";
         loading_bar_image.GetComponent<UnityEngine.UI.Image>().fillAmount = load_counter / len;
         
         if (load_counter >= len)

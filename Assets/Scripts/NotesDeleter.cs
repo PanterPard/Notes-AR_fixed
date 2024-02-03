@@ -3,26 +3,21 @@ using System.IO;
 
 public class NotesDeleter : MonoBehaviour
 {
-    // CSV-файл
+    // CSV-С„Р°Р№Р»
     public TextAsset csv_file;
 
     public void DeleteNotes()
     {
-        File.WriteAllText(getPath() + "/Data/NotesData.csv", "name,text,image_url");
-        Debug.Log("Данные CSV-файла очищены.");
+        File.WriteAllText(getPath() + "/Data/NotesData.csv", "idв†”nameв†”textв†”image_url");
+        Debug.Log("NotesDeleter: Р”Р°РЅРЅС‹Рµ РѕС‡РёС‰РµРЅС‹.");
     }
 
     private static string getPath()
     {
         #if UNITY_EDITOR
-            Debug.Log("Редактор: путь получен.");
-            return Application.dataPath;
-        #elif UNITY_ANDROID
-            Debug.Log("Андроид: путь получен.");
-            return Application.persistentDataPath;
+        return Application.dataPath;
         #else
-            Debug.Log("???: путь получен.");
-            return Application.dataPath;
+        return Application.persistentDataPath;
         #endif
     }
 }

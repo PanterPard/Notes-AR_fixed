@@ -1,11 +1,14 @@
+using System.Collections;
 using UnityEngine;
 using System.IO;
 using TMPro;
 
 public class NoteEditor : MonoBehaviour
 {
-    public TextAsset csv_file;
+    private char r = 'â†’';
+    private char f = 'â†”';
 
+    public TMP_Text input_index;
     public TMP_InputField input_name;
     public TMP_InputField input_text;
 
@@ -15,41 +18,40 @@ public class NoteEditor : MonoBehaviour
 
     public void StartEditNote()
     {
-        records = csv_file.text.Split('\n');
+        string[] records = GetCSV().Split(r);
         for (int i = 1; i < records.Length; i++)
         {
-            string[] field = records[i].Split('\t');
-            if (field[0] == input_name.text)
+            string[] field = records[i].Split(f);
+            if (field[0] == input_index.text)
             {
-                records[i] = input_name.text + '\t' + input_text.text + '\t' + field[2];
+                records[i] = field[0] + f + input_name.text + f + input_text.text + f + field[3];
+                Debug.Log("NoteEditor: Ð’Ñ‹Ð·Ñ‹Ð²Ð°ÐµÑ‚ÑÑ EndEditNote()");
                 EndEditNote();
                 break;
             }
         }
     }
 
-    private void EndEditNote()
+    private static string GetCSV()
     {
-        File.WriteAllText(getPath() + "/Data/NotesData.csv", "name,text,image_url");
-        for (int i = 1; i < records.Length; i++)
-        {
-            File.AppendAllText(getPath() + "/Data/NotesData.csv", '\n' + records[i]);
-        }
-        #if UNITY_EDITOR
-        UnityEditor.AssetDatabase.Refresh();
-        Debug.Log("NoteEditor: äàííûå îáíîâëåíû.");
-        #endif
+        var csv_file = Resources.Load<TextAsset>("UserData/NotesData");
+        return csv_file.text;
     }
 
-    // C:\Unity Projects\Notes-AR_fixed\Assets\Data
+    private void EndEditNote()
+    {
+        File.WriteAllText(getPath(), "idâ†”nameâ†”textâ†”image_url");
+        for (int i = 1; i < records.Length; i++)
+        {
+            File.AppendAllText(getPath(), r + records[i]);
+        }
+        Debug.Log("NoteEditor: Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ñ‹.");
+    }
+
     private static string getPath()
     {
-        #if UNITY_EDITOR
-        Debug.Log("NoteEditor: ïóòü ïîëó÷åí.");
-        return Application.dataPath;
-        #elif UNITY_ANDROID
-        Debug.Log("NoteEditor: ïóòü ïîëó÷åí.");
-        return Application.persistentDataPath;
-        #endif
+        FileInfo info = new FileInfo(Path.GetFullPath("Assets/Resources/NotesData.csv"));
+        Debug.Log("NoteEditor: " + info.FullName);
+        return info.FullName;
     }
 }

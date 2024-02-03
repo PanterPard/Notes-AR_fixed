@@ -6,6 +6,8 @@ using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 public class NoteSaver : MonoBehaviour
 {
     public TextAsset csv_file;
+    private char r = 'в†’';
+    private char f = 'в†”';
 
     public TMP_InputField input_note_name;
     public TMP_InputField input_note_text;
@@ -13,21 +15,14 @@ public class NoteSaver : MonoBehaviour
 
     public void SaveNote()
     {
-        File.AppendAllText(getPath() + "/Data/NotesData.csv", '\n' + input_note_name.text + ',' + input_note_text.text + ',' + input_note_image_url);
-        Debug.Log("NoteSaver: данные сохранены.");
-        #if UNITY_EDITOR
-        UnityEditor.AssetDatabase.Refresh();
-        #endif
+        File.AppendAllText(getPath(), r + input_note_name.text + f + input_note_text.text + f + input_note_image_url);
+        Debug.Log("NotesSaver: Р”Р°РЅРЅС‹Рµ СЃРѕС…СЂР°РЅРµРЅС‹.");
     }
 
     private static string getPath()
     {
-        #if UNITY_ANDROID
-            Debug.Log("NoteSaver: путь получен.");
-            return Application.persistentDataPath;
-        #else
-            Debug.Log("NoteSaver: путь получен.");
-            return Application.dataPath;
-        #endif
+        FileInfo info = new FileInfo(Path.GetFullPath("Assets/Data/NotesData.csv"));
+        Debug.Log("NoteEditor: " + info.FullName);
+        return info.FullName;
     }
 }

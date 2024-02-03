@@ -21,23 +21,14 @@ public class SettingsManager : MonoBehaviour
 
     public void WriteSettingsData()
     {
-        File.WriteAllText(getPath() + "/Data/UserSettings.csv", "browser" + '\n' + input_browser.text);
-        #if UNITY_EDITOR
-        UnityEditor.AssetDatabase.Refresh();
-        #endif
+        File.WriteAllText(getPath(), "browser" + '\n' + input_browser.text);
+        Debug.Log("SettingsManager: Настройки изменены.");
     }
 
     private static string getPath()
     {
-        #if UNITY_ANDROID
-            Debug.Log("Андроид: путь получен.");
-            return Application.dataPath;
-        #elif UNITY_EDITOR
-            Debug.Log("Редактор: путь получен.");
-            return Application.persistentDataPath;
-        #else
-            Debug.Log("Редактор: путь получен.");
-            return Application.dataPath;
-        #endif
+        FileInfo info = new FileInfo(Path.GetFullPath("Assets/Data/UserSettings"));
+        Debug.Log("SettingsManager: " + info.FullName);
+        return info.FullName;
     }
 }
