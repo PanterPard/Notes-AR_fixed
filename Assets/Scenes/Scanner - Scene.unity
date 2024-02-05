@@ -716,9 +716,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   csv_file: {fileID: 4900000, guid: 99adb3eb68f52504091ce51633862e3b, type: 3}
+  input_note_index: 0
   input_note_name: {fileID: 1926024221}
   input_note_text: {fileID: 2079799462}
   input_note_image_url: {fileID: 320942658}
+  path: 
 --- !u!114 &377520530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -794,8 +796,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 377520529}
-        m_TargetAssemblyTypeName: NotesSaver, Assembly-CSharp
-        m_MethodName: SaveNote
+        m_TargetAssemblyTypeName: NoteSaver, Assembly-CSharp
+        m_MethodName: ReadData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2324,7 +2326,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   note_prefab: {fileID: 4431553726965559757, guid: 36a0e362b8ed8894fab440ad13a99249,
     type: 3}
-  csv_file: {fileID: 4900000, guid: 07624efdbf4db03428bb7664e9d0080d, type: 3}
   note_image_file: {fileID: 0}
   loading_bar_text: {fileID: 512076710}
   loading_bar_image: {fileID: 356687694}

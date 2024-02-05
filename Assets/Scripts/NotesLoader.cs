@@ -3,12 +3,13 @@ using UnityEngine;
 using Vuforia;
 using UnityEngine.Networking;
 using TMPro;
+using System.IO;
+using System.Text;
 
 public class NotesLoader : MonoBehaviour
 {
     public GameObject note_prefab;
 
-    public TextAsset csv_file;
     private char r = '→';
     private char f = '↔';
 
@@ -24,6 +25,8 @@ public class NotesLoader : MonoBehaviour
     public TMP_Text loading_bar_text;
     public GameObject loading_bar_image;
 
+    public string path;
+
     public void Awake()
     {
         StartCoroutine(ReadData());
@@ -31,28 +34,31 @@ public class NotesLoader : MonoBehaviour
 
     IEnumerator ReadData()
     {
-        string[] records = csv_file.text.Split(r);
+        path = getPath();
 
-        if (records.Length != 1)
+        if (File.Exists(path) == false)
         {
-            len = records.Length - 1;
-
-            for (int i = 1; i < records.Length; i++)
-            {
-                string[] fields = records[i].Split(f);
-
-                input_note_index = fields[0];
-                input_note_name = fields[1];
-                input_note_text = fields[2];
-                input_note_image_url = fields[3];
-
-                yield return StartCoroutine(RetrieveTextureFromWeb());
-            }
+            using (StreamWriter head = new StreamWriter(path))
+                head.Write("id↔name↔text↔image_url");
+                HideLoadingBar();
         }
 
-        else
+        StreamReader data_file = new StreamReader(getPath(), Encoding.Default);
+        string[] records = data_file.ReadToEnd().Split(r);
+        data_file.Close();
+
+        len = records.Length - 1;
+
+        for (int i = 1; i < records.Length; i++)
         {
-            HideLoadingBar();
+            string[] fields = records[i].Split(f);
+
+            input_note_index = fields[0];
+            input_note_name = fields[1];
+            input_note_text = fields[2];
+            input_note_image_url = fields[3];
+
+            yield return StartCoroutine(RetrieveTextureFromWeb());
         }
     }
 
@@ -110,5 +116,14 @@ public class NotesLoader : MonoBehaviour
     private void HideLoadingBar()
     {
         GameObject.Find("Load Notes - Panel").SetActive(false);
+    }
+
+    private static string getPath()
+    {
+#if UNITY_EDITOR
+        return "C:/Notes-AR_Data/NotesData.txt";
+#elif UNITY_ANDROID
+        return Application.persistentdata;
+#endif
     }
 }

@@ -1368,7 +1368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767b0248f3e8aa4499ef10427c5d0a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  csv_file: {fileID: 4900000, guid: 07624efdbf4db03428bb7664e9d0080d, type: 3}
+  data_file: {fileID: 4900000, guid: 4a9675806e415474092f368bfbabef75, type: 3}
   input_index: {fileID: 2207915189162644401}
   input_name: {fileID: 3120334465418695140}
   input_text: {fileID: 2354491706522623247}
@@ -1650,7 +1650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767b0248f3e8aa4499ef10427c5d0a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  csv_file: {fileID: 4900000, guid: 07624efdbf4db03428bb7664e9d0080d, type: 3}
+  data_file: {fileID: 4900000, guid: 4a9675806e415474092f368bfbabef75, type: 3}
   input_index: {fileID: 2207915189162644401}
   input_name: {fileID: 3120334465418695140}
   input_text: {fileID: 2354491706522623247}
