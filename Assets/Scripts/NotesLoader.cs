@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using TMPro;
 using System.IO;
 using System.Text;
+using System;
 
 public class NotesLoader : MonoBehaviour
 {
@@ -25,7 +26,8 @@ public class NotesLoader : MonoBehaviour
     public TMP_Text loading_bar_text;
     public GameObject loading_bar_image;
 
-    public string path;
+    public string folder_path;
+    public string file_path;
 
     public void Awake()
     {
@@ -34,16 +36,17 @@ public class NotesLoader : MonoBehaviour
 
     IEnumerator ReadData()
     {
-        path = getPath();
+        file_path = getPath() + "/NotesData.txt";
 
-        if (File.Exists(path) == false)
+        if (File.Exists(file_path) == false)
         {
-            using (StreamWriter head = new StreamWriter(path))
+
+            using (StreamWriter head = new StreamWriter(file_path))
                 head.Write("id↔name↔text↔image_url");
                 HideLoadingBar();
         }
 
-        StreamReader data_file = new StreamReader(getPath(), Encoding.Default);
+        StreamReader data_file = new StreamReader(file_path, Encoding.Default);
         string[] records = data_file.ReadToEnd().Split(r);
         data_file.Close();
 
@@ -120,10 +123,10 @@ public class NotesLoader : MonoBehaviour
 
     private static string getPath()
     {
-#if UNITY_EDITOR
-        return "C:/Notes-AR_Data/NotesData.txt";
-#elif UNITY_ANDROID
-        return Application.persistentdata;
+#if UNITY_ANDROID
+        return Application.persistentDataPath;
+#elif UNITY_EDITOR
+        return "C:/Notes-AR_Data";
 #endif
     }
 }

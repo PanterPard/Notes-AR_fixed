@@ -13,13 +13,17 @@ public class NoteEditor : MonoBehaviour
     public TMP_InputField input_name;
     public TMP_InputField input_text;
 
+    public string file_path;
+
     public int note_index;
 
     public string[] records;
 
     public void StartEditNote()
     {
-        StreamReader data_file = new StreamReader(getPath(), Encoding.Default);
+        file_path = getPath() + "/NotesData.txt";
+
+        StreamReader data_file = new StreamReader(file_path, Encoding.Default);
         records = data_file.ReadToEnd().Split(r);
         data_file.Close();
 
@@ -37,16 +41,16 @@ public class NoteEditor : MonoBehaviour
 
     private void EndEditNote()
     {
-        File.WriteAllText(getPath(), string.Join(r, records));
+        File.WriteAllText(file_path, string.Join(r, records));
         Debug.Log("NoteEditor: данные изменены.");
     }
 
     private static string getPath()
     {
-#if UNITY_EDITOR
-        return "C:/Notes-AR_Data/NotesData.txt";
-#elif UNITY_ANDROID
-        return Application.persistentdata;
+#if UNITY_ANDROID
+        return Application.persistentDataPath;
+#elif UNITY_EDITOR
+        return "C:/Notes-AR_Data";
 #endif
     }
 }

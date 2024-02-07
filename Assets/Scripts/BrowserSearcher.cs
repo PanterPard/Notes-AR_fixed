@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.IO;
 
 public class BrowserSearcher : MonoBehaviour
 {
