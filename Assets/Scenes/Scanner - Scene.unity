@@ -569,7 +569,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 442e2e965d95cdc45a5ca9feb9610f27, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -720,7 +720,8 @@ MonoBehaviour:
   input_note_name: {fileID: 1926024221}
   input_note_text: {fileID: 2079799462}
   input_note_image_url: {fileID: 320942658}
-  path: 
+  note_error: 0
+  file_path: 
 --- !u!114 &377520530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,9 +736,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   note_prefab: {fileID: 4431553726965559757, guid: 36a0e362b8ed8894fab440ad13a99249,
     type: 3}
+  createNote_panel: {fileID: 490661101}
+  buttons: {fileID: 570995890}
   input_note_name: {fileID: 1926024221}
   input_note_text: {fileID: 2079799462}
   input_note_image_url: {fileID: 320942658}
+  note_error: 0
   note_image_file: {fileID: 0}
 --- !u!114 &377520531
 MonoBehaviour:
@@ -786,18 +790,6 @@ MonoBehaviour:
       - m_Target: {fileID: 377520530}
         m_TargetAssemblyTypeName: NotesCreator, Assembly-CSharp
         m_MethodName: CreateNote
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 377520529}
-        m_TargetAssemblyTypeName: NoteSaver, Assembly-CSharp
-        m_MethodName: ReadData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2329,6 +2321,8 @@ MonoBehaviour:
   note_image_file: {fileID: 0}
   loading_bar_text: {fileID: 512076710}
   loading_bar_image: {fileID: 356687694}
+  folder_path: 
+  file_path: 
 --- !u!4 &879407573
 Transform:
   m_ObjectHideFlags: 0
@@ -2764,8 +2758,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0e8376ed28dae4281484ecbc2af8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  csv_file: {fileID: 4900000, guid: 0603e4f6a308ce2438216abbb7b12af5, type: 3}
   browser: 
+  file_path: 
 --- !u!1 &1207891861
 GameObject:
   m_ObjectHideFlags: 0
@@ -3815,7 +3809,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 442e2e965d95cdc45a5ca9feb9610f27, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4258,7 +4252,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 442e2e965d95cdc45a5ca9feb9610f27, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

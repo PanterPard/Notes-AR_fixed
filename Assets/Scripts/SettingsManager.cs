@@ -1,34 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using TMPro;
+using System.Text;
 
 public class SettingsManager : MonoBehaviour
 {
-    public TextAsset csv_file;
+    private char r = '\n';
+    private char f = ',';
 
     public TMP_InputField input_browser;
 
-    public void Awake()
+    public string file_path;
+
+    private void Awake()
     {
-        string[] records = csv_file.text.Split('\n');
-        string[] fields = records[1].Split('\t');
+        ReadData();
+    }
+
+    public void ReadData()
+    {
+        file_path = getPath() + "/UserSettings.txt";
+
+        if (File.Exists(file_path) == false)
         {
-            input_browser.text = fields[0];
+            using (StreamWriter head = new StreamWriter(file_path))
+                head.Write("name,value");
+        }
+
+        StreamReader data_file = new StreamReader(file_path, Encoding.UTF8);
+        string[] records = data_file.ReadToEnd().Split(r);
+        data_file.Close();
+
+        for (int i = 1; i < records.Length; i++)
+        {
+            string[] fields = records[i].Split(f);
+            {
+                if (i == 1)
+                {
+                    input_browser.text = fields[1];
+                }
+            }
         }
     }
 
     public void WriteSettingsData()
     {
-        File.WriteAllText(getPath(), "browser" + '\n' + input_browser.text);
+        File.WriteAllText(file_path, "name,value\nbrowser" + f + input_browser.text);
         Debug.Log("SettingsManager: Настройки изменены.");
     }
 
     private static string getPath()
     {
-        FileInfo info = new FileInfo(Path.GetFullPath("Assets/Data/UserSettings"));
-        Debug.Log("SettingsManager: " + info.FullName);
-        return info.FullName;
+        return Application.persistentDataPath;
     }
 }

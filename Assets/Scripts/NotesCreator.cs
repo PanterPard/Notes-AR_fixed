@@ -3,21 +3,21 @@ using UnityEngine;
 using TMPro;
 using Vuforia;
 using UnityEngine.Networking;
+using System;
 
 public class NotesCreator : MonoBehaviour
 {
-    // Образец
     public GameObject note_prefab;
+    public GameObject createNote_panel;
+    public GameObject buttons;
 
-    // Поля ввода
     public TMP_InputField input_note_name;
     public TMP_InputField input_note_text;
     public TMP_InputField input_note_image_url;
+    public bool note_error = false;
 
-    // Изображение
     public Texture2D note_image_file;
 
-    // Создание заметки
     public void CreateNote()
     {
         StartCoroutine(RetrieveTextureFromWeb());
@@ -30,8 +30,8 @@ public class NotesCreator : MonoBehaviour
             yield return uwr.SendWebRequest();
             if (uwr.result != UnityWebRequest.Result.Success)
             {
+                note_error = true;
                 Debug.Log(uwr.error);
-                Debug.Log("Link: " + input_note_image_url.text);    
             }
             else
             {
@@ -60,5 +60,12 @@ public class NotesCreator : MonoBehaviour
         note.GetComponentInChildren<NoteDataBuffer>().trigger = true;
         note.GetComponentInChildren<NoteDataBuffer>().note_name = input_note_name.text;
         note.GetComponentInChildren<NoteDataBuffer>().note_text = input_note_text.text;
+        note.GetComponentInChildren<NoteDataBuffer>().dateTime = DateTime.Now.ToString("dd/mm/yyyy hh:mm");
+
+        this.GetComponent<NoteSaver>().note_error = note_error;
+        this.GetComponent<NoteSaver>().ReadData();
+
+        createNote_panel.SetActive(false);
+        buttons.SetActive(true);
     }
 }

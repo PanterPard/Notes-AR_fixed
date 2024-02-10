@@ -3,21 +3,17 @@ using System.IO;
 
 public class NotesDeleter : MonoBehaviour
 {
-    // CSV-файл
-    public TextAsset csv_file;
+    public string file_path;
 
     public void DeleteNotes()
     {
-        File.WriteAllText(getPath() + "/Data/NotesData.csv", "id↔name↔text↔image_url");
+        file_path = getPath() + "/NotesData.txt";
+        File.WriteAllText(file_path, "id↔name↔text↔image_url↔dateTime↔error");
         Debug.Log("NotesDeleter: Данные очищены.");
     }
 
     private static string getPath()
     {
-        #if UNITY_EDITOR
-        return Application.dataPath;
-        #else
         return Application.persistentDataPath;
-        #endif
     }
 }
